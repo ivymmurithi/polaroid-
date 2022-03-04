@@ -17,3 +17,8 @@ class Comment(models.Model):
     comment = models.TextField()
     image_id = models.ForeignKey(Image, on_delete=models.CASCADE)
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
+
+class Likes(models.Model):
+    likes = models.IntegerField(default=0)
+    image_id = models.ForeignKey(Image, on_delete=models.CASCADE)
+    profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE) 
