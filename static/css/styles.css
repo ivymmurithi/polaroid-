@@ -5,3 +5,18 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive !important;
+}
+
+.nav-link {
+    font-family: 'Special Elite', cursive !important;
+    font-size: 1rem !important;
+}
+
+.searchicon {
+    width: 4%;
+    padding: 0;
+    margin: 0;
+}
