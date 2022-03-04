@@ -12,4 +12,8 @@ class Image(models.Model):
     image_name = models.CharField(max_length=30)
     caption = models.TextField()
     profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE) 
-    
+
+class Comment(models.Model):
+    comment = models.TextField()
+    image_id = models.ForeignKey(Image, on_delete=models.CASCADE)
+    profile_id = models.ForeignKey(Profile, on_delete=models.CASCADE)
