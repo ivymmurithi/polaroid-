@@ -7,4 +7,15 @@
         background-image: linear-gradient(to right, #e2dbd5, #efede0) !important;
      }
  </style>
+
+{% for profile in profiles %}
+<div class="card mb-3">
+    <img class="card-img-top" src="" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Bio</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+</div>
+{% endfor %}
 {% endblock %}

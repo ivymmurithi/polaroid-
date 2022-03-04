@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
-
+from .models import Profile,Image,Comment,Likes
 
 # Create your views here.
 def register(request):
@@ -20,4 +20,5 @@ def index(request):
 
 @login_required
 def profile(request):
-    return render(request, 'profile.html')
+    profile_object = Profile.objects.all()
+    return render(request, 'profile.html', {"profiles":profile_object})
