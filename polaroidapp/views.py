@@ -1,7 +1,9 @@
+from email import message
 from django.shortcuts import render, redirect
 from .forms import RegisterForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile,Image,Comment,Likes
+from .models import Profile,Image,Comment,Likes,User
+from django.contrib import messages
 
 # Create your views here.
 def register(request):
@@ -20,5 +22,12 @@ def index(request):
 
 @login_required
 def profile(request):
-    profile_object = Profile.objects.all()
+    if request.method == 'POST':
+        if 'profiles' in request.POST and request.POST['profiles']:
+            searched_profile = request.POST['profiles']
+            profile_object = User.objects.filter(username__icontains=searched_profile)
+        else:
+            messages.error(request, "User does not exist!")
+    else:
+        profile_object = Profile.objects.all()
     return render(request, 'profile.html', {"profiles":profile_object})
