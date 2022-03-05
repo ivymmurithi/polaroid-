@@ -1,6 +1,6 @@
 from email import message
 from django.shortcuts import render, redirect
-from .forms import RegisterForm
+from .forms import RegisterForm, UploadForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Image,Comment,Likes,User
 from django.contrib import messages

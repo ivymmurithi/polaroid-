@@ -8,6 +8,12 @@
      }
  </style>
 
+ <form action="{% url 'profile' %}" method="'POST" enctype="multipart/form-data">
+     {% csrf_token %}
+     {{uploadform}}
+     <button class="btn btn-outline-success" type="submit">Upload</button>
+ </form>
+
 {% for profile in profiles %}
 
     <div class="card" style="width: 18rem;">
@@ -19,6 +25,7 @@
     </div>
 
 {% endfor %}
+
 
 
 
