@@ -31,3 +31,7 @@ def profile(request):
     else:
         profile_object = Profile.objects.all()
     return render(request, 'profile.html', {"profiles":profile_object})
+
+@login_required
+def feed(request):
+    return render(request, 'feed.html') 
