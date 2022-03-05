@@ -1,4 +1,4 @@
-from email import message
+from distutils.command.upload import upload
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, UploadForm
 from django.contrib.auth.decorators import login_required
@@ -22,8 +22,16 @@ def index(request):
 
 @login_required
 def profile(request):
-    profile = Profile.objects.get(user=request.session['_auth_user_id'])
-    return render(request, 'profile.html', {'profile':profile})
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        else:
+            form = UploadForm()
+    else:
+        profile = Profile.objects.get(user=request.session['_auth_user_id'])
+        image_object = Image.objects.filter(user_id=request.session['_auth_user_id'])
+    return render(request, 'profile.html', {'profile':profile,'images':image_object})
 
 @login_required
 def results(request):

@@ -1,20 +1,27 @@
 .navbar-brand {
-    font-family: 'Satisfy', cursive !important;
+  font-family: "Satisfy", cursive !important;
 }
 
 .nav-link {
-    font-family: 'Special Elite', cursive !important;
-    font-size: 1rem !important;
+  font-family: "Special Elite", cursive !important;
+  font-size: 1rem !important;
 }
 
 .searchicon {
-    width: 4%;
-    padding: 0;
-    margin: 0;
+  width: 4%;
+  padding: 0;
+  margin: 0;
 }
 
-.card-text{
-font-family: 'Playfair Display', serif;
+.card-text {
+  font-family: "Playfair Display", serif;
+}
+
+.uploads {
+  font-family: "Special Elite", cursive !important;
+  margin-top: 6%;
+  margin-bottom: 4%;
+  text-align: center;
 }
 
 /* e2dbd5 */
