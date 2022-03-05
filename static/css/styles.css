@@ -1,11 +1,3 @@
-/* .home-bg, body {
-  background-image: url("../../media/images/andy-art-t-WkBEOQngs-unsplash.jpg");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-size: cover;
-} */
-
 .navbar-brand {
     font-family: 'Satisfy', cursive !important;
 }
@@ -19,6 +11,10 @@
     width: 4%;
     padding: 0;
     margin: 0;
+}
+
+.card-text{
+font-family: 'Playfair Display', serif;
 }
 
 /* e2dbd5 */

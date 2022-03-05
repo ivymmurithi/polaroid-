@@ -10,30 +10,17 @@
 
 {% for profile in profiles %}
 
-    <div class="profile-images">
-        <img class="img-fluid" src="media/{{profile.profile_photo}}" alt="" onload="displayProfile('media/{{profile.profile_photo}}','{{profile.user}}','{{profile.bio}}')">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
+        <div class="card-body">
+            <p class="card-text">Username: {{profile.user}}</p>
+            <p class="card-text">Bio: {{profile.bio}}</p>
+        </div>
     </div>
 
 {% endfor %}
 
-    <div class="card mb-3" id="cardload">
-        <img class="card-img-top" id="cardimage" src="" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title" id="username"></h5>
-            <p class="card-text" id="bio"></p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-        </div>
-    </div>
 
-<script>
-
-    function displayProfile(profile_photo,user,bio) {
-        $('#username').text(user)
-        $('#bio').text(bio)
-        $('#cardimage').attr('src',profile_photo)
-    }
-
-</script>
 
 
 {% endblock %}
