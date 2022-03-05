@@ -14,8 +14,6 @@
      <button class="btn btn-outline-success" type="submit">Upload</button>
  </form>
 
-{% for profile in profiles %}
-
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
         <div class="card-body">
@@ -23,9 +21,6 @@
             <p class="card-text">Bio: {{profile.bio}}</p>
         </div>
     </div>
-
-{% endfor %}
-
 
 
 

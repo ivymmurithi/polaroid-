@@ -22,15 +22,19 @@ def index(request):
 
 @login_required
 def profile(request):
+    profile = Profile.objects.get(user=request.session['_auth_user_id'])
+    return render(request, 'profile.html', {'profile':profile})
+
+@login_required
+def results(request):
     if request.method == 'POST':
         if 'profiles' in request.POST and request.POST['profiles']:
             searched_profile = request.POST['profiles']
-            profile_object = User.objects.filter(username__icontains=searched_profile)
+            profile_object = Profile.objects.filter(user__username__icontains=searched_profile)
+            return render(request, 'search.html', {'profiles':profile_object})
         else:
             messages.error(request, "User does not exist!")
-    else:
-        profile_object = Profile.objects.all()
-    return render(request, 'profile.html', {"profiles":profile_object})
+    return render(request, 'search.html')
 
 @login_required
 def feed(request):

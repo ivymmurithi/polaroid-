@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background-image: linear-gradient(to right, #e2dbd5, #efede0) !important;
+    }
+</style>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.error %} class="{{ message.error}}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+{% for profile in profiles %}
+
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
+    <div class="card-body">
+        <p class="card-text">Username: {{profile.user}}</p>
+        <p class="card-text">Bio: {{profile.bio}}</p>
+    </div>
+</div>
+
+{% endfor %}
+
+{% endblock %}
