@@ -27,11 +27,51 @@
     {% for image in images %}
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="{{image.uploaded_image.url}}" alt="Card image cap">
+        <div class="icons my-1 mp-1 d-flex justify-content-start">
+            <button onclick="likecount()" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks">0</span></button>
+            <button onclick="textarea()" class="btn"><img style="width: 2rem" src="../../media/images/chat.png" alt=""></button>
+        </div>
         <div class="card-body">
             <p class="card-title">{{image.image_name}}</p>
             <p class="card-text">{{image.caption}}</p>
         </div>
     </div>
     {% endfor %}
+
+    <script>
+
+        function textarea() {
+            let form = document.createElement("form");
+            form.setAttribute('method','post');
+            // form.setAttribute('action','');
+
+            let token = document.createElement('input');
+            token.setAttribute('name','csrfmiddlewaretoken');
+            token.setAttribute('type', 'hidden');
+            token.setAttribute('value','{{csrf_token}}');
+            
+            let cinput = document.createElement('input');
+            cinput.setAttribute('type','text');
+            cinput.setAttribute('placeholder','Comment here...');
+            cinput.setAttribute('name','comment');
+
+            let sbutton = document.createElement('input');
+            sbutton.setAttribute('type','submit');
+            sbutton.setAttribute('value','submit');
+
+            form.append(sbutton);
+            form.append(cinput);
+            form.append(token);
+            document.body.appendChild(form);
+        }
+
+        let clicks = 0;
+
+        function likecount() {
+            clicks += 1;
+            document.getElementById('clicks').innerHTML = clicks;
+        }
+
+    </script>
 
 {% endblock %}
