@@ -26,15 +26,19 @@ def profile(request):
     if request.method == 'POST':
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('profile',{'form':form})
+            form.cleaned_data['user_id'] = request.session['_auth_user_id']
+            image = form.save()
+            image.user_id = request.session['_auth_user_id']
+            image.save()
+            return redirect('/profile/',{'form':form})
         else:
             form = UploadForm()
     else:
         profile = Profile.objects.get(user=request.session['_auth_user_id'])
         image_objects = Image.objects.filter(user_id=request.session['_auth_user_id'])
         comments = Comment.objects.filter(image_id__user__id=profile.user.id)
-    return render(request, 'profile.html', {'profile':profile,'images':image_objects, 'comments': comments})
+        form = UploadForm()
+    return render(request, 'profile.html', {'profile':profile,'images':image_objects, 'comments': comments, 'form':form})
 
 @login_required
 def results(request):
