@@ -10,20 +10,7 @@
      }
  </style>
 
-<a class="btn btn-outline btn-sm btn-rounded uploadButton" style="background-color: #333333;" href="#!" role="button" type="button" data-toggle="collapse" data-target="#collapseUpload"
-    aria-expanded="false" aria-controls="collapseExample">
-    <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload
-</a>
-
-<div class="collapse" id="collapseUpload">
- <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
-     {% csrf_token %}
-     {{form|crispy}}
-     <button class="btn btn-outline-success" type="submit">Upload</button>
- </form>
-</div>
-
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 18rem;" >
         <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
         <div class="card-body">
             <p class="card-text">Username: {{profile.user}}</p>
@@ -33,16 +20,39 @@
 
     <p class="uploads h2">Uploads</p>
 
+    <div class="uploadbtn">
+        <a class="btn btn-outline btn-sm btn-rounded uploadButton" style="background-color: #333333;" href="#!"
+            role="button" type="button" data-toggle="collapse" data-target="#collapseUpload" aria-expanded="false"
+            aria-controls="collapseExample">
+            <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload
+        </a>
+    </div>
+
+    <div class="collapse" id="collapseUpload">
+        <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button class="btn btn-outline-success" type="submit">Upload</button>
+        </form>
+    </div>
+
+
+    <div class="grid-container gifs">
     {% for image in images %}
-    <div class="card gifs" style="width: 18rem;">
-        <div class="gif">
+    <div class="card">
+        <div class="col-md-auto">
             <img class="card-img-top" src="{{image.uploaded_image.url}}" alt="Card image cap">
             <div class="icons my-1 mp-1 d-flex justify-content-start">
-                <button onclick="likecount('{{image.id}}')" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks{{image.id}}">{{image.likes}}</span></button>
-                <button onclick="textarea('commentform{{image.id}}')" class="btn"><img style="width: 2rem" src="../../media/images/chat.png" alt=""></button>
+                <button onclick="likecount('{{image.id}}')" class="btn">
+                    <img style="width: 2rem;" src="../../media/images/heart.png" alt="">
+                    <span id="clicks{{image.id}}">{{image.likes}}</span>
+                </button>
+                <button onclick="textarea('commentform{{image.id}}')" class="btn">
+                    <img style="width: 2rem" src="../../media/images/chat.png" alt="">
+                </button>
             </div>
             <div id="commentform{{image.id}}" hidden>
-                <input type="text" id="comment">
+                <input class="form-control" type="text" id="comment">
                 <button class="btn" onclick="commentsubmit('{{image.id}}')" type="submit">Submit</button>
             </div>
             <div class="card-body">
@@ -59,14 +69,13 @@
                                 Show Comments
                             </button>
                         </h5>
-
                     </div>
                 </div>
             </div>
 
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
             {% for comm in comments %}
                 {% if comm.image_id.id == image.id %}
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card">
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
@@ -75,12 +84,14 @@
                         </blockquote>
                     </div>      
             </div>
+            </div>
             {% endif %}
         {% endfor %}
-        </div>
+        
         </div>
     </div>
     {% endfor %}
+    </div>
 
     <script>
 
@@ -92,11 +103,10 @@
            let data = {
                 csrfmiddlewaretoken: '{{csrf_token}}',
                 image_id: image_id,
-                comment_value: $("#comment").val()
+                comment_value: $('#comment').val()
             };
             $.post('/comment/', data, function (data) {
-                console.log(data)
-                ('#textcomment').html(data.comment)
+                $('#textcomment').html(data.comment)
             })
         }
 
@@ -110,7 +120,6 @@
                     $(`#clicks${image_id}`).html(data.likes)
                 }
             })
-
         }
 
     </script>
