@@ -45,6 +45,11 @@
 .collapselink {
   font-family: "Special Elite", cursive !important;
 }
+
+.uploadButton {
+  font-family: "Special Elite", cursive !important;
+  color: aliceblue;
+}
 /* 
 .gifs {
   display: grid;
