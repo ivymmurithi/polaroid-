@@ -32,8 +32,9 @@ def profile(request):
             form = UploadForm()
     else:
         profile = Profile.objects.get(user=request.session['_auth_user_id'])
-        image_object = Image.objects.filter(user_id=request.session['_auth_user_id'])
-    return render(request, 'profile.html', {'profile':profile,'images':image_object})
+        image_objects = Image.objects.filter(user_id=request.session['_auth_user_id'])
+        comments = Comment.objects.filter(image_id__user__id=profile.user.id)
+    return render(request, 'profile.html', {'profile':profile,'images':image_objects, 'comments': comments})
 
 @login_required
 def results(request):
@@ -58,3 +59,17 @@ def likes(request):
     Image.objects.filter(pk=image_id).update(likes=like_count)
 
     return JsonResponse({"liked": True, "likes": like_count})
+
+@login_required
+def comment(request):
+    image_id = request.POST.get("image_id")
+    image = Image.objects.get(pk=image_id)
+    comment_value = request.POST.get("comment_value")
+    user_id = request.session['_auth_user_id']
+    user = User.objects.get(pk=user_id)
+    comment = Comment.objects.create(
+        comment= comment_value,
+        user = user,
+        image_id=image
+    )
+    return JsonResponse({'comment':comment.comment, 'user':user.username})

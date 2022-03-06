@@ -31,46 +31,49 @@
             <button onclick="likecount('{{image.id}}')" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks">{{image.likes}}</span></button>
             <button onclick="textarea()" class="btn"><img style="width: 2rem" src="../../media/images/chat.png" alt=""></button>
         </div>
+        <div id="commentform" hidden>
+            <form action=""></form>
+            <input type="text" id="comment">
+            <button class="btn" onclick="commentsubmit('{{image.id}}')" type="submit">Submit</button>
+        </div>
         <div class="card-body">
             <p class="card-text">{{image.image_name}}</p>
             <p class="card-text">{{image.caption}}</p>
         </div>
+        {% for comm in comments %}
+            {% if comm.image_id.id == image.id %}
+            <div class="card">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p id="textcomment">{{comm.comment}}</p>
+                        <footer class="blockquote-footer">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
     </div>
     {% endfor %}
 
     <script>
 
         function textarea() {
-            let form = document.createElement("form");
-            form.setAttribute('method','post');
-            // form.setAttribute('action','');
-
-            let token = document.createElement('input');
-            token.setAttribute('name','csrfmiddlewaretoken');
-            token.setAttribute('type', 'hidden');
-            token.setAttribute('value','{{csrf_token}}');
-            
-            let cinput = document.createElement('input');
-            cinput.setAttribute('type','text');
-            cinput.setAttribute('placeholder','Comment here...');
-            cinput.setAttribute('name','comment');
-
-            let sbutton = document.createElement('input');
-            sbutton.setAttribute('type','submit');
-            sbutton.setAttribute('value','submit');
-
-            form.append(sbutton);
-            form.append(cinput);
-            form.append(token);
-            document.body.appendChild(form);
+            $('#commentform').removeAttr('hidden');
         }
 
-        function likecount(image_id) {
-            /*
-            |image_id|csrftoken|
-            |    1   |   1234  |
-            */
-            
+        function commentsubmit(image_id) {
+           let data = {
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                image_id: image_id,
+                comment_value: $("#comment").val()
+            };
+            $.post('/comment/', data, function (data) {
+                console.log(data)
+                ('#textcomment').html(data.comment)
+            })
+        }
+
+        function likecount(image_id) {    
             let count = {
                 csrfmiddlewaretoken: '{{csrf_token}}',
                 image_id: image_id,

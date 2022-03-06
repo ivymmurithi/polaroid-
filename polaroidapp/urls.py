@@ -11,6 +11,7 @@ urlpatterns = [
     path('profile/',views.profile, name='profile'),
     path('feed/', views.feed, name='feed'),
     path('likes/', views.likes, name='likes'),
+    path('comment/', views.comment, name='comment'),
 ]
 
 
