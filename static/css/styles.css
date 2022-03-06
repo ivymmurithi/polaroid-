@@ -41,5 +41,19 @@
 .commentstitle {
   font-family: "Special Elite", cursive !important;
 }
+
+
+.gifs {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  width: 140%;
+  margin: 0 auto;
+  margin-top: 5%;
+}
+
+.gif {
+  max-width: 140%;
+  cursor: pointer;
+}
 /* e2dbd5 */
 /* efede0 */

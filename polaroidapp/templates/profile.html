@@ -25,41 +25,42 @@
     <p class="uploads h2">Uploads</p>
 
     {% for image in images %}
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{image.uploaded_image.url}}" alt="Card image cap">
-        <div class="icons my-1 mp-1 d-flex justify-content-start">
-            <button onclick="likecount('{{image.id}}')" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks">{{image.likes}}</span></button>
-            <button onclick="textarea()" class="btn"><img style="width: 2rem" src="../../media/images/chat.png" alt=""></button>
-        </div>
-        <div id="commentform" hidden>
-            <form action=""></form>
-            <input type="text" id="comment">
-            <button class="btn" onclick="commentsubmit('{{image.id}}')" type="submit">Submit</button>
-        </div>
-        <div class="card-body">
-            <p class="card-text">{{image.image_name}}</p>
-            <p class="card-text">{{image.caption}}</p>
-        </div>
-        <p class="text-center commentstitle">Comments</p>
-        {% for comm in comments %}
-            {% if comm.image_id.id == image.id %}
-            <div class="card">
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                        <p id="textcomment">{{comm.comment}}</p>
-                        <footer class="blockquote-footer author">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
-                    </blockquote>
-                </div>
+    <div class="card gifs" style="width: 18rem;">
+        <div class="gif">
+            <img class="card-img-top" src="{{image.uploaded_image.url}}" alt="Card image cap">
+            <div class="icons my-1 mp-1 d-flex justify-content-start">
+                <button onclick="likecount('{{image.id}}')" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks{{image.id}}">{{image.likes}}</span></button>
+                <button onclick="textarea('commentform{{image.id}}')" class="btn"><img style="width: 2rem" src="../../media/images/chat.png" alt=""></button>
+            </div>
+            <div id="commentform{{image.id}}" hidden>
+                <input type="text" id="comment">
+                <button class="btn" onclick="commentsubmit('{{image.id}}')" type="submit">Submit</button>
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{image.image_name}}</p>
+                <p class="card-text">{{image.caption}}</p>
+            </div>
+            <p class="text-center commentstitle">Comments</p>
+            {% for comm in comments %}
+                {% if comm.image_id.id == image.id %}
+                <div class="card">
+                    <div class="card-body">
+                        <blockquote class="blockquote mb-0">
+                            <p id="textcomment">{{comm.comment}}</p>
+                            <footer class="blockquote-footer author">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
+                        </blockquote>
+                    </div>      
             </div>
             {% endif %}
         {% endfor %}
+        </div>
     </div>
     {% endfor %}
 
     <script>
 
-        function textarea() {
-            $('#commentform').removeAttr('hidden');
+        function textarea(comment_form_id) {
+            $(`#${comment_form_id}`).removeAttr('hidden');
         }
 
         function commentsubmit(image_id) {
@@ -81,7 +82,7 @@
             };
             $.post('/likes/',count,function(data){
                 if(data.liked) {
-                    $('#clicks').html(data.likes)
+                    $(`#clicks${image_id}`).html(data.likes)
                 }
             })
 
