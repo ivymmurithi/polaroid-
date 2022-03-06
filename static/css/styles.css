@@ -42,7 +42,10 @@
   font-family: "Special Elite", cursive !important;
 }
 
-
+.collapselink {
+  font-family: "Special Elite", cursive !important;
+}
+/* 
 .gifs {
   display: grid;
   grid-template-columns: auto auto auto auto;
@@ -54,6 +57,6 @@
 .gif {
   max-width: 140%;
   cursor: pointer;
-}
+} */
 /* e2dbd5 */
 /* efede0 */
