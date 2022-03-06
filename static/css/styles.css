@@ -28,5 +28,18 @@
   font-family: "Special Elite", cursive !important;
 }
 
+#textcomment {
+  font-family: "Special Elite", cursive !important;
+  font-size: 0.8rem;
+}
+
+.author {
+  font-size: 0.8rem;
+  font-family: "Special Elite", cursive !important;
+}
+
+.commentstitle {
+  font-family: "Special Elite", cursive !important;
+}
 /* e2dbd5 */
 /* efede0 */

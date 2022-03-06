@@ -40,13 +40,14 @@
             <p class="card-text">{{image.image_name}}</p>
             <p class="card-text">{{image.caption}}</p>
         </div>
+        <p class="text-center commentstitle">Comments</p>
         {% for comm in comments %}
             {% if comm.image_id.id == image.id %}
             <div class="card">
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
                         <p id="textcomment">{{comm.comment}}</p>
-                        <footer class="blockquote-footer">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
+                        <footer class="blockquote-footer author">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
                     </blockquote>
                 </div>
             </div>
