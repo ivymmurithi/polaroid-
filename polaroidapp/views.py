@@ -2,8 +2,9 @@ from distutils.command.upload import upload
 from django.shortcuts import render, redirect
 from .forms import RegisterForm, UploadForm
 from django.contrib.auth.decorators import login_required
-from .models import Profile,Image,Comment,Likes,User
+from .models import Profile,Image,Comment,User
 from django.contrib import messages
+from django.http import JsonResponse
 
 # Create your views here.
 def register(request):
@@ -26,6 +27,7 @@ def profile(request):
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
+            return redirect('profile',{'form':form})
         else:
             form = UploadForm()
     else:
@@ -47,3 +49,12 @@ def results(request):
 @login_required
 def feed(request):
     return render(request, 'feed.html') 
+
+@login_required
+def likes(request):
+    image_id = request.POST.get("image_id")
+    image = Image.objects.get(pk=image_id)
+    like_count = image.likes + 1
+    Image.objects.filter(pk=image_id).update(likes=like_count)
+
+    return JsonResponse({"liked": True, "likes": like_count})

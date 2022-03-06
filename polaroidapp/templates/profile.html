@@ -8,7 +8,7 @@
      }
  </style>
 
- <form action="{% url 'profile' %}" method="'POST" enctype="multipart/form-data">
+ <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
      {% csrf_token %}
      {{form}}
      <button class="btn btn-outline-success" type="submit">Upload</button>
@@ -28,11 +28,11 @@
     <div class="card" style="width: 18rem;">
         <img class="card-img-top" src="{{image.uploaded_image.url}}" alt="Card image cap">
         <div class="icons my-1 mp-1 d-flex justify-content-start">
-            <button onclick="likecount()" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks">0</span></button>
+            <button onclick="likecount('{{image.id}}')" class="btn"><img style="width: 2rem;" src="../../media/images/heart.png" alt=""><span id="clicks">{{image.likes}}</span></button>
             <button onclick="textarea()" class="btn"><img style="width: 2rem" src="../../media/images/chat.png" alt=""></button>
         </div>
         <div class="card-body">
-            <p class="card-title">{{image.image_name}}</p>
+            <p class="card-text">{{image.image_name}}</p>
             <p class="card-text">{{image.caption}}</p>
         </div>
     </div>
@@ -65,11 +65,22 @@
             document.body.appendChild(form);
         }
 
-        let clicks = 0;
+        function likecount(image_id) {
+            /*
+            |image_id|csrftoken|
+            |    1   |   1234  |
+            */
+            
+            let count = {
+                csrfmiddlewaretoken: '{{csrf_token}}',
+                image_id: image_id,
+            };
+            $.post('/likes/',count,function(data){
+                if(data.liked) {
+                    $('#clicks').html(data.likes)
+                }
+            })
 
-        function likecount() {
-            clicks += 1;
-            document.getElementById('clicks').innerHTML = clicks;
         }
 
     </script>

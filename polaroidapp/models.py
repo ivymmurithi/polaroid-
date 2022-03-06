@@ -15,6 +15,7 @@ class Image(models.Model):
     image_name = models.CharField(max_length=30, null=True)
     caption = models.TextField(null=True)
     user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    likes = models.IntegerField(null=False, blank=False, default=0)
 
     def __str__(self):
         return self.image_name 
@@ -26,11 +27,3 @@ class Comment(models.Model):
 
     def __str__(self):
         return self.comment
-
-class Likes(models.Model):
-    likes = models.IntegerField(default=0, null=True)
-    image_id = models.ForeignKey(Image,null=True, on_delete=models.CASCADE)
-    user = models.ForeignKey(User,null=True, on_delete=models.CASCADE) 
-
-    def __str__(self):
-        return 'Likes={}'.format(self.likes)
