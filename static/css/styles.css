@@ -52,8 +52,8 @@
 }
 
 .uploadbtn {
-    margin-top: 1%;
-    margin-bottom: 1%;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
 
 /* .grid-container {
@@ -71,4 +71,23 @@
 .gif {
   max-width: 100%;
   cursor: pointer;
+}
+
+.text-line {
+  background-color: transparent;
+  color: #eeeeee;
+  outline: none;
+  outline-style: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: solid black 1px;
+  padding: 3px 10px;
+}
+
+.searchtext,
+.text-line,
+input,
+button {
+  font-family: "Special Elite", cursive !important;
 }
