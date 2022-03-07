@@ -53,11 +53,6 @@ def results(request):
     return render(request, 'search.html')
 
 @login_required
-def feed(request):
-    allimages = Image.objects.all()
-    return render(request, 'feed.html', {'allimages':allimages}) 
-
-@login_required
 def likes(request):
     image_id = request.POST.get("image_id")
     image = Image.objects.get(pk=image_id)

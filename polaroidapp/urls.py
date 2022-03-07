@@ -9,7 +9,6 @@ urlpatterns = [
     path('',views.index, name='index'),
     path('results/', views.results, name='results'),
     path('profile/',views.profile, name='profile'),
-    path('feed/', views.feed, name='feed'),
     path('likes/', views.likes, name='likes'),
     path('comment/', views.comment, name='comment'),
     path('logoutuser/', views.logoutuser, name='logoutuser'),

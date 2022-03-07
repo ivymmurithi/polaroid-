@@ -91,3 +91,12 @@ input,
 button {
   font-family: "Special Elite", cursive !important;
 }
+
+.showCommentsBtn {
+  cursor: pointer;
+  border-radius: 0%;
+  background-color: white;
+  color: blue;
+  border-color: white;
+  text-align: right;
+}

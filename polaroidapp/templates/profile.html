@@ -4,40 +4,40 @@
 
 
 {% block content %}
- <style>
-     body {
+<style>
+    body {
         background-image: linear-gradient(to right, #e2dbd5, #efede0) !important;
-     }
- </style>
+    }
+</style>
 
-    <div class="card" style="width: 18rem;" >
-        <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
-        <div class="card-body">
-            <p class="card-text">Username: {{profile.user}}</p>
-            <p class="card-text">Bio: {{profile.bio}}</p>
-        </div>
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
+    <div class="card-body">
+        <p class="card-text">Username: {{profile.user}}</p>
+        <p class="card-text">Bio: {{profile.bio}}</p>
     </div>
+</div>
 
-    <p class="uploads h2">Uploads</p>
+<p class="uploads h2">Uploads</p>
 
-    <div class="uploadbtn">
-        <a class="btn btn-outline btn-sm btn-rounded uploadButton" style="background-color: #333333;" href="#!"
-            role="button" type="button" data-toggle="collapse" data-target="#collapseUpload" aria-expanded="false"
-            aria-controls="collapseExample">
-            <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload
-        </a>
-    </div>
+<div class="uploadbtn">
+    <a class="btn btn-outline btn-sm btn-rounded uploadButton" style="background-color: #333333;" href="#!"
+        role="button" type="button" data-toggle="collapse" data-target="#collapseUpload" aria-expanded="false"
+        aria-controls="collapseExample">
+        <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload
+    </a>
+</div>
 
-    <div class="collapse" id="collapseUpload">
-        <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{form|crispy}}
-            <button class="btn btn-outline-success" type="submit">Upload</button>
-        </form>
-    </div>
+<div class="collapse" id="collapseUpload">
+    <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button class="btn btn-outline-success" type="submit">Upload</button>
+    </form>
+</div>
 
 
-    <div class="grid-container gifs">
+<div class="grid-container gifs">
     {% for image in images %}
     <div class="card">
         <div class="col-md-auto">
@@ -61,76 +61,81 @@
             </div>
 
 
-            <div id="accordion{{image.id}}">
-                <div class="card">
-                    <div class="card-header" id="headingOne">
-                        <h5 class="mb-0">
-                            <button class="btn btn-link collapselink" data-toggle="collapse" data-target="#collapseOne"
-                                aria-expanded="false" aria-controls="collapseOne">
-                                Show Comments
-                            </button>
-                        </h5>
+            <button class="btn btn-primary showCommentsBtn" type="button" data-toggle="collapse" data-target="#collapseExample{{image.id}}"
+                aria-expanded="false" aria-controls="collapseExample{{image.id}}">
+                Show Comments
+            </button>
+
+            <div class="collapse" id="collapseExample{{image.id}}">
+                <div class="card card-body">
+                    <div class="getcomment" id="getcomment{{image.id}}">
+                        {% for comm in comments %}
+                        {% if comm.image_id.id == image.id %}
+                        <div class="card">
+                            <div class="card-body">
+                                <blockquote class="blockquote mb-0">
+                                    <p id="textcomment">{{comm.comment}}</p>
+                                    <footer class="blockquote-footer author">By: <cite id="getauthor"
+                                            title="Source Title">{{comm.user.username}}</cite></footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
 
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion{{image.id}}">
-                                    <div class="getcomment"></div>
-                                                
-            <div class="getcomment" id="getcomment{{imade.id}}">
-            {% for comm in comments %}
-                {% if comm.image_id.id == image.id %}
-                <div class="card">
-                    <div class="card-body">
-                        <blockquote class="blockquote mb-0">
-                            <p id="textcomment">{{comm.comment}}</p>
-                            <footer class="blockquote-footer author">By: <cite id="getauthor" title="Source Title">{{comm.user.username}}</cite></footer>
-                        </blockquote>
-                    </div>      
-                </div>
-            {% endif %}
-        {% endfor %}
-        </div>
-
-        </div>
         </div>
     </div>
     {% endfor %}
-    </div>
+</div>
 
-    <script>
+<script>
 
-        function textarea(comment_form_id) {
-            $(`#${comment_form_id}`).removeAttr('hidden');
-        }
+    function textarea(comment_form_id) {
+        $(`#${comment_form_id}`).removeAttr('hidden');
+    }
 
-        function commentsubmit(image_id) {
-           let data = {
-                csrfmiddlewaretoken: '{{csrf_token}}',
-                image_id: image_id,
-                comment_value: $(`#comment{{image_id}}`).val()
-            };
-            $.post('/comment/', data, function (data) {
-                let newComment = $('.card').clone()
-                newComment.appendTo(`#getcomment${image_id}`);
-                newComment.find('#textcomment').html(data.comment)
-                newComment.find('#getauthor').html(data.user)
-                // $(`#comment{{image_id}}`).html(data.comment)
-            })
-        }
+    function get_comment_html(comment, username) {
+        return `
+            <div class="card">
+                <div class="card-body">
+                    <blockquote class="blockquote mb-0">
+                        <p id="textcomment">${comment}</p>
+                        <footer class="blockquote-footer author">By: <cite id="getauthor" title="Source Title">${username}</cite></footer>
+                    </blockquote>
+                </div>      
+            </div>
+            `
+    }
 
-        function likecount(image_id) {    
-            let count = {
-                csrfmiddlewaretoken: '{{csrf_token}}',
-                image_id: image_id,
-            };
-            $.post('/likes/',count,function(data){
-                if(data.liked) {
-                    $(`#clicks${image_id}`).html(data.likes)
-                }
-            })
-        }
+    function commentsubmit(image_id) {
+        let data = {
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            image_id: image_id,
+            comment_value: $(`#comment${image_id}`).val()
+        };
+        $.post('/comment/', data, function (data) {
+            let card = $.parseHTML(get_comment_html(data.comment, data.user))[1]
+            console.log($(`#getcomment${image_id}`))
+            $(`#getcomment${image_id}`)[0].append(card)
+            // $(`#comment{{image_id}}`).html(data.comment)
+        })
+    }
 
-    </script>
+    function likecount(image_id) {
+        let count = {
+            csrfmiddlewaretoken: '{{csrf_token}}',
+            image_id: image_id,
+        };
+        $.post('/likes/', count, function (data) {
+            if (data.liked) {
+                $(`#clicks${image_id}`).html(data.likes)
+            }
+        })
+    }
+
+</script>
 
 {% endblock %}
