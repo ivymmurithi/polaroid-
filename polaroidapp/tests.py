@@ -43,3 +43,23 @@ class ImageTestClass(TestCase):
         self.image1.delete_image()
         images = Image.objects.all()
         self.assertTrue(len(images) -1)
+
+class CommentTestClass(TestCase):
+
+    def setUp(self):
+        self.comment1= Comment(comment= 'Cute cat')
+        self.comment1.save_comment()
+
+    def test_instance(self):
+        self.assertTrue(isinstance(self.comment1,Comment))
+
+    def test_save_method(self):
+        self.comment1.save_comment()
+        comments = Comment.objects.all()
+        self.assertTrue(len(comments) > 0)
+
+    def test_delete_method(self):
+        self.comment1.save_comment()
+        self.comment1.delete_comment()
+        comments = Comment.objects.all()
+        self.assertTrue(len(comments) -1)
