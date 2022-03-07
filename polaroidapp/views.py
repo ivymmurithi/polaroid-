@@ -4,7 +4,8 @@ from .forms import RegisterForm, UploadForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Image,Comment,User
 from django.contrib import messages
-from django.http import JsonResponse
+from django.http import HttpRequest, JsonResponse,HttpResponse
+from django.contrib.auth import logout
 
 # Create your views here.
 def register(request):
@@ -77,3 +78,8 @@ def comment(request):
         image_id=image
     )
     return JsonResponse({'comment':comment.comment, 'user':user.username})
+
+@login_required
+def logoutuser(request):
+    logout(request)
+    return redirect('login')

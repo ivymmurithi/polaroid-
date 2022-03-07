@@ -12,6 +12,7 @@ urlpatterns = [
     path('feed/', views.feed, name='feed'),
     path('likes/', views.likes, name='likes'),
     path('comment/', views.comment, name='comment'),
+    path('logoutuser/', views.logoutuser, name='logoutuser'),
 ]
 
 
