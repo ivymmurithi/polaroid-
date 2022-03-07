@@ -47,7 +47,9 @@ def results(request):
         if 'profiles' in request.POST and request.POST['profiles']:
             searched_profile = request.POST['profiles']
             profile_object = Profile.objects.filter(user__username__icontains=searched_profile)
-            return render(request, 'search.html', {'profiles':profile_object})
+            profile_ids = [profile.user.id for profile in profile_object]
+            uploads_object = Image.objects.filter(user_id__in=profile_ids)
+            return render(request, 'search.html', {'profiles':profile_object,'images':uploads_object})
         else:
             messages.error(request, "User does not exist!")
     return render(request, 'search.html')
