@@ -61,7 +61,7 @@
             </div>
 
 
-            <!-- <div id="accordion">
+            <div id="accordion{{image.id}}">
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
@@ -74,22 +74,25 @@
                 </div>
             </div>
 
-            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion"> -->
-
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion{{image.id}}">
+                                    <div class="getcomment"></div>
+                                                
+            <div class="getcomment" id="getcomment{{imade.id}}">
             {% for comm in comments %}
                 {% if comm.image_id.id == image.id %}
                 <div class="card">
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
                             <p id="textcomment">{{comm.comment}}</p>
-                            <footer class="blockquote-footer author">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
+                            <footer class="blockquote-footer author">By: <cite id="getauthor" title="Source Title">{{comm.user.username}}</cite></footer>
                         </blockquote>
                     </div>      
                 </div>
-            
             {% endif %}
         {% endfor %}
-        <!-- </div> -->
+        </div>
+
+        </div>
         </div>
     </div>
     {% endfor %}
@@ -108,7 +111,11 @@
                 comment_value: $(`#comment{{image_id}}`).val()
             };
             $.post('/comment/', data, function (data) {
-                $(`#comment{{image_id}}`).html(data.comment)
+                let newComment = $('.card').clone()
+                newComment.appendTo(`#getcomment${image_id}`);
+                newComment.find('#textcomment').html(data.comment)
+                newComment.find('#getauthor').html(data.user)
+                // $(`#comment{{image_id}}`).html(data.comment)
             })
         }
 

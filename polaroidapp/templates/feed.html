@@ -7,4 +7,64 @@
         background-image: linear-gradient(to right, #e2dbd5, #efede0) !important;
     }
 </style>
+
+{% for image in allimages %}
+
+<div class="card">
+    <div class="col-md-auto">
+        <img class="card-img-top" src="{{image.uploaded_image.url}}" alt="Card image cap">
+        <div class="icons my-1 mp-1 d-flex justify-content-start">
+            <button onclick="likecount('{{image.id}}')" class="btn">
+                <img style="width: 2rem;" src="../../media/images/heart.png" alt="">
+                <span id="clicks{{image.id}}">{{image.likes}}</span>
+            </button>
+            <button onclick="textarea('commentform{{image.id}}')" class="btn">
+                <img style="width: 2rem" src="../../media/images/chat.png" alt="">
+            </button>
+        </div>
+        <div id="commentform{{image.id}}" hidden>
+            <input class="form-control" type="text" id="comment{{image.id}}">
+            <button class="btn" onclick="commentsubmit('{{image.id}}')" type="submit">Submit</button>
+        </div>
+        <div class="card-body">
+            <p class="card-text">{{image.image_name}}</p>
+            <p class="card-text">{{image.caption}}</p>
+        </div>
+
+
+        <div id="accordion{{image.id}}">
+                <div class="card">
+                    <div class="card-header" id="headingOne">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapselink" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="false" aria-controls="collapseOne">
+                                Show Comments
+                            </button>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion{{image.id}}">
+
+        {% for comm in comments %}
+        {% if comm.image_id.id == image.id %}
+        
+        <div class="card">
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p id="textcomment">{{comm.comment}}</p>
+                    <footer class="blockquote-footer author">By: <cite
+                            title="Source Title">{{comm.user.username}}</cite></footer>
+                </blockquote>
+            </div>
+        </div>
+
+        {% endif %}
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
 {% endblock %}

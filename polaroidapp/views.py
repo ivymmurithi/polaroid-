@@ -4,7 +4,7 @@ from .forms import RegisterForm, UploadForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Image,Comment,User
 from django.contrib import messages
-from django.http import HttpRequest, JsonResponse,HttpResponse
+from django.http import JsonResponse
 from django.contrib.auth import logout
 
 # Create your views here.
@@ -54,7 +54,8 @@ def results(request):
 
 @login_required
 def feed(request):
-    return render(request, 'feed.html') 
+    allimages = Image.objects.all()
+    return render(request, 'feed.html', {'allimages':allimages}) 
 
 @login_required
 def likes(request):
