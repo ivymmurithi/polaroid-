@@ -52,7 +52,7 @@
                 </button>
             </div>
             <div id="commentform{{image.id}}" hidden>
-                <input class="form-control" type="text" id="comment">
+                <input class="form-control" type="text" id="comment{{image.id}}">
                 <button class="btn" onclick="commentsubmit('{{image.id}}')" type="submit">Submit</button>
             </div>
             <div class="card-body">
@@ -60,12 +60,13 @@
                 <p class="card-text">{{image.caption}}</p>
             </div>
 
-            <div id="accordion">
+
+            <!-- <div id="accordion">
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h5 class="mb-0">
-                            <button class="btn btn-link collapselink" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"
-                                aria-controls="collapseOne">
+                            <button class="btn btn-link collapselink" data-toggle="collapse" data-target="#collapseOne"
+                                aria-expanded="false" aria-controls="collapseOne">
                                 Show Comments
                             </button>
                         </h5>
@@ -73,9 +74,10 @@
                 </div>
             </div>
 
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion"> -->
+
             {% for comm in comments %}
                 {% if comm.image_id.id == image.id %}
-                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                 <div class="card">
                     <div class="card-body">
                         <blockquote class="blockquote mb-0">
@@ -83,11 +85,11 @@
                             <footer class="blockquote-footer author">By: <cite title="Source Title">{{comm.user.username}}</cite></footer>
                         </blockquote>
                     </div>      
-            </div>
-            </div>
+                </div>
+            
             {% endif %}
         {% endfor %}
-        
+        <!-- </div> -->
         </div>
     </div>
     {% endfor %}
@@ -103,10 +105,10 @@
            let data = {
                 csrfmiddlewaretoken: '{{csrf_token}}',
                 image_id: image_id,
-                comment_value: $('#comment').val()
+                comment_value: $(`#comment{{image_id}}`).val()
             };
             $.post('/comment/', data, function (data) {
-                $('#textcomment').html(data.comment)
+                $(`#comment{{image_id}}`).html(data.comment)
             })
         }
 
