@@ -5,9 +5,10 @@ Polaroid
 Post your images, comment and like other peoples images!
 
 ## How to Use
-Login or register if you don't have an account.
-Upload image and add a bio to your profile.
-Search for other users you'd wish to view.
+1. Login or register if you don't have an account.
+2. Upload image and add a bio to your profile.
+3. Upload images to your profile feed.
+4. Search for mukami to view the only established account for now.
 
 ## Technologies Used
 1. Django
