@@ -1,6 +1,4 @@
 from django.test import TestCase
-
-from polaroidapp.views import likes
 from .models import Profile,Image,Comment
 
 # Create your tests here.
