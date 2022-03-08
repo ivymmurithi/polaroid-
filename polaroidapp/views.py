@@ -1,6 +1,5 @@
-from distutils.command.upload import upload
 from django.shortcuts import render, redirect
-from .forms import RegisterForm, UploadForm
+from .forms import RegisterForm, UploadForm, ProfileForm
 from django.contrib.auth.decorators import login_required
 from .models import Profile,Image,Comment,User
 from django.contrib import messages
@@ -39,7 +38,22 @@ def profile(request):
         image_objects = Image.objects.filter(user_id=request.session['_auth_user_id'])
         comments = Comment.objects.filter(image_id__user__id=profile.user.id)
         form = UploadForm()
-    return render(request, 'profile.html', {'profile':profile,'images':image_objects, 'comments': comments, 'form':form})
+        profile_form = ProfileForm()
+    return render(request, 'profile.html', {'profile':profile,'images':image_objects, 'comments': comments, 'form':form, 'profileform':profile_form})
+
+@login_required
+def uploadprofile(request):
+    if request.method == 'POST':
+        user = Profile.objects.get(user_id=request.session['_auth_user_id'])
+        profile_form = ProfileForm(request.POST, request.FILES,instance=user)
+        if profile_form.is_valid():
+            profile_form.save()
+            return redirect('/profile/',{'form':profile_form})
+        else:
+            profile_form = ProfileForm()
+    else:
+        profile_form = ProfileForm()
+    return render(request, 'profile.html', {'profileform':profile_form})
 
 @login_required
 def results(request):

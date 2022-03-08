@@ -10,6 +10,22 @@
     }
 </style>
 
+<div class="uploadbtn">
+    <a class="btn btn-outline btn-sm btn-rounded uploadButton" style="background-color: #333333;" href="#!"
+        role="button" type="button" data-toggle="collapse" data-target="#collapseUploads" aria-expanded="false"
+        aria-controls="collapseExample">
+        <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload Profile
+    </a>
+</div>
+
+<div class="collapse" id="collapseUploads">
+    <form action="{% url 'uploadprofile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{profileform|crispy}}
+        <button class="btn btn-outline-success" type="submit">Upload</button>
+    </form>
+</div>
+
 <div class="card" style="width: 18rem;">
     <img class="card-img-top" src="{{profile.profile_photo.url}}" alt="Card image cap">
     <div class="card-body">
@@ -24,7 +40,7 @@
     <a class="btn btn-outline btn-sm btn-rounded uploadButton" style="background-color: #333333;" href="#!"
         role="button" type="button" data-toggle="collapse" data-target="#collapseUpload" aria-expanded="false"
         aria-controls="collapseExample">
-        <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload
+        <img style="width: 2rem;" src="../../media/images/upload.png" alt=""> Upload Photos
     </a>
 </div>
 

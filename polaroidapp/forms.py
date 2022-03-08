@@ -15,3 +15,9 @@ class UploadForm(forms.ModelForm):
     class Meta:
         model = Image
         fields = ['uploaded_image','image_name','caption']
+
+class ProfileForm(forms.ModelForm):
+
+    class Meta:
+        model = Profile
+        fields = ['profile_photo','bio']

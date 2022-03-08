@@ -1,14 +1,15 @@
+from email.policy import default
 from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
 class Profile(models.Model):
-    profile_photo = models.ImageField(upload_to = 'profiles/', null=True)
+    profile_photo = models.ImageField(upload_to = 'profiles/', null=True, default='profiles/13.jpg')
     bio = models.TextField(null=True)
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.bio
+        return self.user.username
 
     def save_profile(self):
         """
