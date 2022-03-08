@@ -8,7 +8,7 @@ Post your images, comment and like other peoples images!
 1. Login or register if you don't have an account.
 2. Upload image and add a bio to your profile.
 3. Upload images to your profile feed.
-4. Search for mukami to view the only established account for now.
+4. Search for mukami and Nelson to view the only established accounts for now.
 
 ## Technologies Used
 1. Django
